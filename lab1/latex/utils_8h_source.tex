@@ -1,0 +1,76 @@
+\doxysection{utils.\+h}
+\hypertarget{utils_8h_source}{}\label{utils_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ UTILS\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ UTILS\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}applicant.h"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Func>}
+\DoxyCodeLine{00019\ \textcolor{keywordtype}{long}\ measureSortTime(Func\ sortFunc,\ \mbox{\hyperlink{class_applicant}{Applicant}}*\ applicants,\ \textcolor{keywordtype}{size\_t}\ size)\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{auto}\ start\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00021\ \ \ \ \ sortFunc(applicants,\ size);}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{auto}\ end\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{long}\ duration\ =\ std::chrono::duration\_cast<std::chrono::microseconds>(end\ -\/\ start).count();}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordflow}{return}\ duration;}
+\DoxyCodeLine{00025\ \}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00032\ std::string\ randomString(\textcolor{keywordtype}{int}\ length)\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{const}\ std::string\ chars\ =\ \textcolor{stringliteral}{"{}abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"{}};}
+\DoxyCodeLine{00034\ \ \ \ \ std::string\ result;}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ length;\ ++i)}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ result\ +=\ chars[rand()\ \%\ (chars.size()\ -\/\ 1)];}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00039\ \}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00046\ \textcolor{keywordtype}{void}\ generateDataCSV(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keywordtype}{int}\ total\ =\ 101000)\ \{}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{const}\ std::string\ faculties[]\ =\ \{\textcolor{stringliteral}{"{}Engineering"{}},\ \textcolor{stringliteral}{"{}Science"{}},\ \textcolor{stringliteral}{"{}Arts"{}},\ \textcolor{stringliteral}{"{}Business"{}}\};}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{const}\ std::string\ specialties[]\ =\ \{\textcolor{stringliteral}{"{}Computer\ Science"{}},\ \textcolor{stringliteral}{"{}Mathematics"{}},\ \textcolor{stringliteral}{"{}Physics"{}},\ \textcolor{stringliteral}{"{}Chemistry"{}},\ \textcolor{stringliteral}{"{}Economics"{}}\};}
+\DoxyCodeLine{00049\ \ \ \ \ std::ofstream\ file(filename);}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordflow}{if}\ (!file.is\_open())\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Error\ opening\ file\ for\ writing."{}}\ <<\ std::endl;}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00053\ \ \ \ \ \}}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ total;\ ++i)\ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ std::string\ name\ =\ randomString(10);}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ std::string\ faculty\ =\ faculties[rand()\ \%\ (\textcolor{keyword}{sizeof}(faculties)\ /\ \textcolor{keyword}{sizeof}(faculties[0]))];}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ std::string\ specialty\ =\ specialties[rand()\ \%\ (\textcolor{keyword}{sizeof}(specialties)\ /\ \textcolor{keyword}{sizeof}(specialties[0]))];}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ score\ =\ rand()\ \%\ 100\ +\ 1;}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ file\ <<\ name\ <<\ \textcolor{stringliteral}{"{};"{}}\ <<\ faculty\ <<\ \textcolor{stringliteral}{"{};"{}}\ <<\ specialty\ <<\ \textcolor{stringliteral}{"{};"{}}\ <<\ score\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00060\ \ \ \ \ \}}
+\DoxyCodeLine{00061\ \ \ \ \ file.close();}
+\DoxyCodeLine{00062\ \}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00070\ \mbox{\hyperlink{class_applicant}{Applicant}}*\ readApplicantsFromFile(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keywordtype}{size\_t}\&\ size)\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ std::ifstream\ file(filename);}
+\DoxyCodeLine{00072\ \ \ \ \ std::vector<Applicant>\ tempApplicants;}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ std::string\ line;}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordflow}{while}\ (getline(file,\ line))\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ std::stringstream\ ss(line);}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ std::string\ name,\ faculty,\ specialty;}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ score;}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ getline(ss,\ name,\ \textcolor{charliteral}{';'});}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ getline(ss,\ faculty,\ \textcolor{charliteral}{';'});}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ getline(ss,\ specialty,\ \textcolor{charliteral}{';'});}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ ss\ >>\ score;}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ tempApplicants.push\_back(\mbox{\hyperlink{class_applicant}{Applicant}}\{name,\ faculty,\ specialty,\ score\});}
+\DoxyCodeLine{00086\ \ \ \ \ \}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ size\ =\ tempApplicants.size();}
+\DoxyCodeLine{00089\ \ \ \ \ \mbox{\hyperlink{class_applicant}{Applicant}}*\ applicants\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_applicant}{Applicant}}[size];}
+\DoxyCodeLine{00090\ \ \ \ \ std::copy(tempApplicants.begin(),\ tempApplicants.end(),\ applicants);}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordflow}{return}\ applicants;}
+\DoxyCodeLine{00093\ \}}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
