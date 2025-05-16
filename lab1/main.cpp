@@ -1,8 +1,6 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <sstream>
-#include <chrono>
 #include <cstdlib>
 
 #include "sorts.h"

@@ -1,7 +1,6 @@
 #ifndef SORTS_H
 #define SORTS_H
 
-#include <algorithm>
 
 /**
  * Select sort
@@ -62,7 +61,6 @@ template <class T>
 void heapSort(T a[], size_t size)
 {
     long i;
-    T temp;
 
     for (i = size / 2 - 1; i >= 0; i--)
         downHeap(a, i, size - 1);
@@ -150,7 +148,7 @@ void mergeSort(T a[], long low, long high)
 }
 
 /**
- * Standard sort
+ * Standart sort
  * @param a array to sort
  * @param size size of the array
  */

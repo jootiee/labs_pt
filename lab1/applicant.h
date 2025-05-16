@@ -38,12 +38,6 @@ public:
                score == other.score;
     }
 
-    /// @brief overloading not equal operator
-    bool operator!=(const Applicant &other) const
-    {
-        return !(*this == other);
-    }
-
     /// @brief overloading greater than operator
     bool operator>(const Applicant &other) const
     {
@@ -56,16 +50,16 @@ public:
         return specialty.compare(other.specialty) > 0;
     }
 
+    /// @brief overloading not equal operator
+    bool operator!=(const Applicant &other) const
+    {
+        return !(*this == other);
+    }
+
     /// @brief overloading less than operator
     bool operator<(const Applicant &other) const
     {
-        if (score != other.score)
-            return score < other.score;
-        if (name.compare(other.name) != 0)
-            return name.compare(other.name) < 0;
-        if (faculty.compare(other.faculty) != 0)
-            return faculty.compare(other.faculty) < 0;
-        return specialty > other.specialty;
+        return *this != other && !(*this > other);
     }
 
     /// @brief overloading greater than or equal operator
