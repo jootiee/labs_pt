@@ -30,9 +30,9 @@ void mergeSortWrapper(Applicant* a, size_t s) {
  */
 void printHelp() {
     std::cout << "Usage:\n"
-              << "  program --generate <size> <output_filename> - Generate test data\n"
-              << "  program --test <input_filename> <output_filename> - Test sorting algorithms\n"
-              << "  program --help                             - Show this help message\n";
+              << "  ./main.out --generate <size> <output_filename> - Generate test data\n"
+              << "  ./main.out --test <input_filename> <output_filename> - Test sorting algorithms\n"
+              << "  ./main.out --help                             - Show this help message\n";
 }
 
 /**

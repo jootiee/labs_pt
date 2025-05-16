@@ -16,12 +16,12 @@ void selectSort(T a[], size_t size)
     {
         k = i;
         x = a[i];
-        for (j = i + 1; j < size; j++) // loop for searching minimal element
+        for (j = i + 1; j < size; j++)
             if (a[j] < x)
                 k = j;
-        x = a[j]; // k - minimal element index
+        x = a[j];
         a[k] = a[i];
-        a[i] = x; // swap minimal element and a[i]
+        a[i] = x;
     }
 }
 
@@ -39,8 +39,8 @@ void downHeap(T a[], long k, long n)
 
     while (k <= n / 2)
     {
-        child = 2 * k;
-        if (child < n && a[child] < a[child + 1])
+        child = 2 * k + 1;
+        if (child + 1< n && a[child] < a[child + 1])
             child++;
 
         if (new_elem >= a[child])
